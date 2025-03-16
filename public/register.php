@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'firebase_config.php';
 
 if (!isset($auth)) {
@@ -10,17 +11,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     try {
+        // Buat akun pengguna di Firebase Authentication
         $userProperties = [
             'email' => $email,
             'password' => $password,
         ];
         $createdUser = $auth->createUser($userProperties);
-        
-        // Redirect ke login setelah berhasil registrasi
-        header('Location: login.php?success=registered');
-        exit();
+
+        if ($createdUser) {
+            $uid = $createdUser->uid; // Ambil UID pengguna dari Firebase
+
+            // Data yang akan disimpan ke Realtime Database
+            $userData = [
+                'email' => $email,
+                'role' => 'user', // Tambahkan role jika perlu
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+
+            // Simpan data user ke Firebase Realtime Database
+            $database->getReference('users/'.$uid)->set($userData);
+
+            // Redirect ke login setelah berhasil registrasi
+            header('Location: login.php?success=registered');
+            exit();
+        }
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        echo "Registrasi gagal: " . $e->getMessage();
     }
 }
 ?>

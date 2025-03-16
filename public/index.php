@@ -1,8 +1,9 @@
 <?php
+session_start();
 include 'firebase_config.php';
 
 // Cek apakah pengguna sudah login
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
     header('Location: login.php');
     exit();
 }

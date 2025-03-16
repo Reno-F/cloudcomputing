@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'firebase_config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -6,11 +7,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     try {
+        // Proses login ke Firebase Authentication
         $signInResult = $auth->signInWithEmailAndPassword($email, $password);
+        $user = $signInResult->data();
         
-        $_SESSION['user'] = $signInResult->data();
-        header('Location: index.php'); // Redirect ke halaman utama setelah login
-        exit();
+        // Ambil UID pengguna yang login
+        $uid = $signInResult->firebaseUserId();
+
+        // Ambil data user dari Realtime Database berdasarkan UID
+        $userData = $database->getReference('users/'.$uid)->getValue();
+
+        if ($userData) {
+            $_SESSION['user'] = $userData; // Simpan data user ke session
+            $_SESSION['user']['uid'] = $uid; // Simpan UID juga untuk referensi
+
+            header('Location: index.php'); // Redirect ke halaman utama setelah login
+            exit();
+        } else {
+            echo "User tidak ditemukan di database.";
+        }
     } catch (Exception $e) {
         echo "Login gagal: " . $e->getMessage();
     }
