@@ -2,17 +2,25 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use Kreait\Firebase\Factory;
-use Kreait\Firebase\Auth;
 
-$factory = (new Factory)
-    ->withServiceAccount(__DIR__ . '/firebase_credentials.json')
-    ->withDatabaseUri('https://cloudcomputing-f7ce8-default-rtdb.asia-southeast1.firebasedatabase.app/');
+// Ambil credentials dari environment variable
+$firebaseCredentials = getenv('FIREBASE_CREDENTIALS');
 
-$database = $factory->createDatabase();
-$auth = $factory->createAuth(); // Tambahkan autentikasi Firebase
-
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+if (!$firebaseCredentials) {
+    die("Firebase credentials not set in environment variables.");
 }
 
+// Decode JSON credentials
+$serviceAccount = json_decode($firebaseCredentials, true);
+
+if (!$serviceAccount) {
+    die("Invalid Firebase credentials.");
+}
+
+// Konfigurasi Firebase (Ganti dengan file JSON yang diunduh dari Firebase)
+$factory = (new Factory)
+    ->withServiceAccount($serviceAccount) // Ganti dengan file JSON Firebase Anda
+    ->withDatabaseUri('https://cloudcomputing-f7ce8-default-rtdb.asia-southeast1.firebasedatabase.app/'); // Ganti dengan URL database Anda
+
+$database = $factory->createDatabase();
 ?>
