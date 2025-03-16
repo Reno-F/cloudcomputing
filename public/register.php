@@ -1,6 +1,10 @@
 <?php
 include 'firebase_config.php';
 
+if (!isset($auth)) {
+    die("Firebase Authentication tidak diinisialisasi dengan benar."); // Debugging
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -14,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         // Redirect ke login setelah berhasil registrasi
         header('Location: login.php?success=registered');
+        exit();
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
