@@ -19,9 +19,6 @@ $factory = (new Factory)
 $db = $factory->createDatabase();
 $auth = $factory->createAuth();
 
-var_dump($auth); 
-exit();
-
 function sendVerificationEmail($email, $verificationLink) {
     $mail = new PHPMailer(true);
     try {
