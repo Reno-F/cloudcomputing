@@ -1,6 +1,9 @@
 <?php
 session_start();
 include 'firebase_config.php';
+
+echo "Login page is working"; exit();
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
