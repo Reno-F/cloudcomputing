@@ -1,7 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 require __DIR__ . '/vendor/autoload.php';
 use Kreait\Firebase\Factory;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -21,6 +18,9 @@ $factory = (new Factory)
 
 $db = $factory->createDatabase();
 $auth = $factory->createAuth();
+
+var_dump($auth); 
+exit();
 
 function sendVerificationEmail($email, $verificationLink) {
     $mail = new PHPMailer(true);
