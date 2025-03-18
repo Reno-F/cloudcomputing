@@ -16,7 +16,7 @@ $factory = (new Factory)
     ->withServiceAccount($serviceAccount)
     ->withDatabaseUri('https://cloudcomputing-f7ce8-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
-$db = $factory->createDatabase();
+$database = $factory->createDatabase();
 $auth = $factory->createAuth();
 
 function sendVerificationEmail($email, $verificationLink) {
