@@ -21,30 +21,32 @@ if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
     <p class="text-end">Login sebagai: <strong><?php echo $_SESSION['user']['email']; ?></strong></p>
     <a href="logout.php" class="btn btn-danger">Logout</a>
     <hr>
+
     <h3>Tambah Pengguna</h3>
     <form method="POST" action="add.php">
         <div class="mb-3">
-            <label for="name" class="form-label">Nama:</label>
+            <label class="form-label">Nama:</label>
             <input type="text" class="form-control" name="name" required>
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">Email:</label>
+            <label class="form-label">Email:</label>
             <input type="email" class="form-control" name="email" required>
         </div>
         <div class="mb-3">
-            <label for="gender" class="form-label">Gender:</label>
+            <label class="form-label">Gender:</label>
             <select class="form-control" name="gender" required>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
             </select>
         </div>
         <div class="mb-3">
-            <label for="phone" class="form-label">Phone:</label>
+            <label class="form-label">Phone:</label>
             <input type="text" class="form-control" name="phone" required>
         </div>
         <button type="submit" class="btn btn-primary">Tambah Data</button>
     </form>
     <hr>
+
     <h3>Data Pengguna</h3>
     <table class="table table-bordered">
         <thead>
@@ -61,15 +63,37 @@ if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
         </tbody>
     </table>
 </div>
+
+<!-- Modal Update -->
+<div id="updateModal" style="display: none;">
+    <form method="POST" action="update.php">
+        <input type="hidden" name="key">
+        <label>Nama:</label>
+        <input type="text" name="name" required>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <label>Gender:</label>
+        <select name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <label>Phone:</label>
+        <input type="text" name="phone" required>
+        <button type="submit">Update</button>
+        <button type="button" onclick="document.getElementById('updateModal').style.display='none'">Batal</button>
+    </form>
+</div>
+
 <script>
-    function openUpdateModal(key, name, email, gender, phone) {
-        document.querySelector('input[name="key"]').value = key;
-        document.querySelector('input[name="name"]').value = name;
-        document.querySelector('input[name="email"]').value = email;
-        document.querySelector('select[name="gender"]').value = gender;
-        document.querySelector('input[name="phone"]').value = phone;
-        document.getElementById('updateModal').style.display = 'block';
-    }
+function openUpdateModal(key, name, email, gender, phone) {
+    document.querySelector('input[name="key"]').value = key;
+    document.querySelector('input[name="name"]').value = name;
+    document.querySelector('input[name="email"]').value = email;
+    document.querySelector('select[name="gender"]').value = gender;
+    document.querySelector('input[name="phone"]').value = phone;
+    document.getElementById('updateModal').style.display = 'block';
+}
 </script>
+
 </body>
 </html>
