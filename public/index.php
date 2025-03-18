@@ -2,14 +2,11 @@
 session_start();
 include 'firebase_config.php';
 
-// Cek apakah pengguna sudah login
 if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
     header('Location: login.php');
     exit();
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,13 +18,9 @@ if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
 <body>
 <div class="container mt-5">
     <h2 class="text-center">CRUD Firebase dengan PHP</h2>
-    
-    <!-- Tampilkan email user yang sedang login -->
     <p class="text-end">Login sebagai: <strong><?php echo $_SESSION['user']['email']; ?></strong></p>
     <a href="logout.php" class="btn btn-danger">Logout</a>
-
     <hr>
-
     <h3>Tambah Pengguna</h3>
     <form method="POST" action="add.php">
         <div class="mb-3">
@@ -51,9 +44,7 @@ if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
         </div>
         <button type="submit" class="btn btn-primary">Tambah Data</button>
     </form>
-
     <hr>
-
     <h3>Data Pengguna</h3>
     <table class="table table-bordered">
         <thead>
@@ -70,7 +61,14 @@ if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
         </tbody>
     </table>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function openUpdateModal(key, name, email, gender, phone) {
+        document.querySelector('input[name="key"]').value = key;
+        document.querySelector('input[name="name"]').value = name;
+        document.querySelector('input[name="email"]').value = email;
+        document.querySelector('select[name="gender"]').value = gender;
+        document.querySelector('input[name="phone"]').value = phone;
+    }
+</script>
 </body>
 </html>

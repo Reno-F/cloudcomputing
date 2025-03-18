@@ -2,7 +2,11 @@
 include 'firebase_config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $key = $_POST['key'];
+    $key = $_POST['key'] ?? null;
+    if (!$key) {
+        die("Key pengguna tidak ditemukan!");
+    }
+    
     $name = $_POST['name'];
     $email = $_POST['email'];
     $gender = $_POST['gender'];
@@ -17,5 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $database->getReference('users/'.$key)->update($data);
     header('Location: index.php');
+    exit();
 }
 ?>

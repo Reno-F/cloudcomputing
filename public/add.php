@@ -6,7 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $gender = $_POST['gender'];
     $phone = $_POST['phone'];
-    
 
     $data = [
         'name' => $name,
@@ -15,7 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'phone' => $phone
     ];
 
-    $database->getReference('users')->push($data);
+    $newUserRef = $database->getReference('users')->push($data);
+    $newUserKey = $newUserRef->getKey();
+    
+    $database->getReference('users/' . $newUserKey . '/id')->set($newUserKey);
+    
     header('Location: index.php');
+    exit();
 }
 ?>

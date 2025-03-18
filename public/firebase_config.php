@@ -15,11 +15,10 @@ if (!$serviceAccount) {
     die("Invalid Firebase credentials.");
 }
 
-// Konfigurasi Firebase
 $factory = (new Factory)
     ->withServiceAccount($serviceAccount)
     ->withDatabaseUri('https://cloudcomputing-f7ce8-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
 $database = $factory->createDatabase();
-$auth = $factory->createAuth(); // Pastikan autentikasi dibuat
+$auth = $factory->createAuth();
 ?>
