@@ -68,6 +68,7 @@ if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
         document.querySelector('input[name="email"]').value = email;
         document.querySelector('select[name="gender"]').value = gender;
         document.querySelector('input[name="phone"]').value = phone;
+        document.getElementById('updateModal').style.display = 'block';
     }
 </script>
 </body>
