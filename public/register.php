@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'firebase_config.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
@@ -10,6 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     try {
+        // Cek apakah email sudah terdaftar di Firebase Authentication
+        try {
+            $user = $auth->getUserByEmail($email);
+            echo "Email sudah digunakan. <a href='login.php'>Login di sini</a>";
+            exit();
+        } catch (\Kreait\Firebase\Exception\Auth\UserNotFound $e) {
+            // Jika email belum terdaftar, lanjutkan proses registrasi
+        }
+
         // Buat akun pengguna di Firebase Authentication
         $userProperties = [
             'email' => $email,
@@ -37,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->Host = 'smtp.gmail.com'; // Ganti dengan SMTP server Anda
                 $mail->SMTPAuth = true;
                 $mail->Username = 'renovansetio0906@gmail.com'; // Ganti dengan email Anda
-                $mail->Password = '14Februari1994'; // Ganti dengan password email
+                $mail->Password = 'your-email-password'; // Ganti dengan password email
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
@@ -47,34 +57,65 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->Body = "Klik link berikut untuk verifikasi akun Anda: http://yourdomain.com/verify.php?code=$verificationCode";
                 
                 $mail->send();
-                echo "<p>Registrasi berhasil! Cek email Anda untuk verifikasi.</p>";
+                echo "Registrasi berhasil! Cek email Anda untuk verifikasi.";
             } catch (Exception $e) {
-                echo "<p>Email tidak dapat dikirim. Error: {$mail->ErrorInfo}</p>";
+                echo "Email tidak dapat dikirim. Error: {$mail->ErrorInfo}";
             }
         }
+    } catch (\Kreait\Firebase\Exception\Auth\EmailExists $e) {
+        echo "Email sudah terdaftar. Silakan gunakan email lain atau login.";
     } catch (Exception $e) {
-        echo "<p>Registrasi gagal: " . $e->getMessage() . "</p>";
+        echo "Registrasi gagal: " . $e->getMessage();
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            background: blue;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Register Page</h1>
-    <form action="" method="post">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+    <div class="container">
+        <h2>Register</h2>
+        <form action="register.php" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
 
-        <button type="submit">Register</button>
-    </form>
+            <button type="submit">Register</button>
+        </form>
+    </div>
 </body>
 </html>
