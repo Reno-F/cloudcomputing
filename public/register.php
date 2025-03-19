@@ -44,10 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail = new PHPMailer(true);
             try {
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com'; // Ganti dengan SMTP server Anda
+                $mail->Host = 'sandbox.smtp.mailtrap.io'; // Ganti dengan SMTP server Anda
                 $mail->SMTPAuth = true;
-                $mail->Username = 'renovansetio0906@gmail.com'; // Ganti dengan email Anda
-                $mail->Password = 'fxnj lmag ctgq wtjv'; // Ganti dengan password email
+                $mail->Username = '287d2c9b43fe08'; // Ganti dengan email Anda
+                $mail->Password = 'c8a8427c91172f'; // Ganti dengan password email
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
