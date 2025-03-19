@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->Host = 'smtp.gmail.com'; // Ganti dengan SMTP server Anda
                 $mail->SMTPAuth = true;
                 $mail->Username = 'renovansetio0906@gmail.com'; // Ganti dengan email Anda
-                $mail->Password = 'your-email-password'; // Ganti dengan password email
+                $mail->Password = 'fxnj lmag ctgq wtjv'; // Ganti dengan password email
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
