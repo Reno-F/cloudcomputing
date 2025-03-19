@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->Username = '287d2c9b43fe08'; // Ganti dengan email Anda
                 $mail->Password = 'c8a8427c91172f'; // Ganti dengan password email
                 $mail->SMTPSecure = 'tls';
-                $mail->Port = 587;
+                $mail->Port = 465;
 
                 $mail->setFrom('your-email@example.com', 'No-Reply');
                 $mail->addAddress($email);
