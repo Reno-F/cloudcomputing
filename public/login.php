@@ -18,10 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $userData = $database->getReference('users/'.$uid)->getValue();
 
         if ($userData) {
-            $_SESSION['user'] = $userData; // Simpan data user ke session
-            $_SESSION['user']['uid'] = $uid; // Simpan UID juga untuk referensi
+            if (!isset($userData['is_verified']) || !$userData['is_verified']) {
+                echo "Login gagal: Email belum diverifikasi. Silakan cek email Anda.";
+                exit();
+            }
+            
+            $_SESSION['user'] = $userData;
+            $_SESSION['user']['uid'] = $uid;
 
-            header('Location: index.php'); // Redirect ke halaman utama setelah login
+            header('Location: index.php');
             exit();
         } else {
             echo "User tidak ditemukan di database.";
