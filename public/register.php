@@ -34,10 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail = new PHPMailer(true);
             try {
                 $mail->isSMTP();
-                $mail->Host = 'smtp.example.com'; // Ganti dengan SMTP server Anda
+                $mail->Host = 'smtp.gmail.com'; // Ganti dengan SMTP server Anda
                 $mail->SMTPAuth = true;
-                $mail->Username = 'your-email@example.com'; // Ganti dengan email Anda
-                $mail->Password = 'your-email-password'; // Ganti dengan password email
+                $mail->Username = 'renovansetio0906@gmail.com'; // Ganti dengan email Anda
+                $mail->Password = '14Februari1994'; // Ganti dengan password email
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
