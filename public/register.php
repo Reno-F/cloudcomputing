@@ -1,7 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 session_start();
 include 'firebase_config.php';
 use PHPMailer\PHPMailer\PHPMailer;
@@ -50,13 +47,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->Body = "Klik link berikut untuk verifikasi akun Anda: http://yourdomain.com/verify.php?code=$verificationCode";
                 
                 $mail->send();
-                echo "Registrasi berhasil! Cek email Anda untuk verifikasi.";
+                echo "<p>Registrasi berhasil! Cek email Anda untuk verifikasi.</p>";
             } catch (Exception $e) {
-                echo "Email tidak dapat dikirim. Error: {$mail->ErrorInfo}";
+                echo "<p>Email tidak dapat dikirim. Error: {$mail->ErrorInfo}</p>";
             }
         }
     } catch (Exception $e) {
-        echo "Registrasi gagal: " . $e->getMessage();
+        echo "<p>Registrasi gagal: " . $e->getMessage() . "</p>";
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register Page</h1>
+    <form action="" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>
