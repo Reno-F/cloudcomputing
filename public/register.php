@@ -33,7 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ];
             $database->getReference('users/'.$uid)->set($userData);
 
-            echo "Registrasi berhasil! Silakan <a href='login.php'>login di sini</a>.";
+            // Redirect ke halaman login setelah registrasi sukses
+            header('Location: login.php');
+            exit();
         }
     } catch (\Kreait\Firebase\Exception\Auth\EmailExists $e) {
         echo "Email sudah terdaftar. Silakan gunakan email lain atau login.";
