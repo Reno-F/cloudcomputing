@@ -18,11 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $userData = $database->getReference('users/'.$uid)->getValue();
 
         if ($userData) {
-            if (!isset($userData['is_verified']) || !$userData['is_verified']) {
-                echo "Login gagal: Email belum diverifikasi. Silakan cek email Anda.";
-                exit();
-            }
-            
             $_SESSION['user'] = $userData;
             $_SESSION['user']['uid'] = $uid;
 
