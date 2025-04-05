@@ -1,19 +1,20 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Kreait\Firebase\Factory;
 
-$firebaseCredentials = getenv('FIREBASE_CREDENTIALS');
+$firebaseCredentialsPath = __DIR__ . '/../firebase_credentials.json';
 
-if (!$firebaseCredentials) {
-    die("Firebase credentials not set in environment variables.");
+if (!file_exists($firebaseCredentialsPath)) {
+    die("Firebase credentials file not found.");
 }
 
-$serviceAccount = json_decode($firebaseCredentials, true);
+$serviceAccount = json_decode(file_get_contents($firebaseCredentialsPath), true);
 
 if (!$serviceAccount) {
     die("Invalid Firebase credentials.");
 }
+
 
 $factory = (new Factory)
     ->withServiceAccount($serviceAccount)
@@ -21,4 +22,3 @@ $factory = (new Factory)
 
 $database = $factory->createDatabase();
 $auth = $factory->createAuth();
-?>
